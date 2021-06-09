@@ -1,0 +1,23 @@
+{% extends 'default.html' %}
+
+
+{% block title %}
+
+        CREATE
+
+{% endblock title %}
+
+{% block content %}
+
+    <h3>Добавить информацию о статье и\или новости</h3>
+
+        <form method="POST">
+        {% csrf_token %}
+            <div> {{ form.as_p }} </div>
+            <input type="submit" value="Добавить">
+            <button> <a href="/news/"> Отмена </a> </button>
+        </form>
+
+
+{% endblock content %}
+

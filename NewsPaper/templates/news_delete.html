@@ -1,0 +1,41 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+
+
+{% block title %}
+
+        NEW_DELETE
+
+{% endblock title %}
+
+{% block content %}
+
+<h2>Вы действительно хотите удалить?</h2>
+<br>
+<table style="margin: auto" border="2">
+    <thead>
+        <th> Автор </th>
+        <th> Заголовок </th>
+        <th> Дата публикации </th>
+        <th> Статья </th>
+        <th> Рейтинг </th>
+    </thead>
+
+        <tr>
+            <td> {{ new.postAuthor.authorUser.first_name }} </td>
+            <td> {{ new.preview_name }} </td>
+            <td> {{ new.dateCreation|date:'d M Y'  }} </td>
+            <td> {{ new.text|censor }} </td>
+            <td> {{ new.rating }} </td>
+        </tr>
+
+</table>
+<br>
+<form method="POST">
+    {% csrf_token %}
+    <p>Вы точно хотите удалить "{{ object }}"?</p>
+    <input type="submit" value="Подтвердить">
+    <button> <a href="/news/"> Отмена </a> </button>
+</form>
+
+{% endblock content %}

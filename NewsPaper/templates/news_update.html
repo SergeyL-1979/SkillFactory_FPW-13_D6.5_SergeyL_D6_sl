@@ -1,0 +1,22 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+
+
+{% block title %}
+
+        NEW_UPDATE
+
+{% endblock title %}
+
+{% block content %}
+
+<h3>Редактировать информацию о статье и\или новости</h3>
+
+<form method="POST">
+    {% csrf_token %}
+    <div> {{ form.as_p }} </div>
+    <input type="submit" value="Редактировать">
+    <button> <a href="/news/"> Отмена </a> </button>
+</form>
+
+{% endblock content %}

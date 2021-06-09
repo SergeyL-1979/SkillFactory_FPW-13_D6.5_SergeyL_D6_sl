@@ -1,0 +1,21 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+
+403
+
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все новости -->
+{% block content %}
+
+<div>
+    <h1>Вы не АВТОР</h1>
+
+    <button> <a href="/sign/upgrade/"> Хочу стать АВТОРОМ </a> </button>
+
+</div>
+
+
+{% endblock content %}
