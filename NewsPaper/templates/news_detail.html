@@ -15,26 +15,9 @@
     <h4> Автор: {{ new.postAuthor }} </h4>
     <h4> <a> {{ new.get_position_display  }} из  {{ PCC }}  </a> </h4>
     <hr>
-    <div > Категории:
-<!--        {% for category in all_category %}-->
-        {% if category in all_category %}
-
-            <a href="category/unsubscribe/{{ category.pk }}" class="btn btn-danger btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
-            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
-            </svg> {{ category }} </a>
-        {% else %}
-            <a href="category/subscribe/{{ category.pk }}" class="btn btn-success btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
-            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
-            </svg> {{ category }} </a>
-
-        {% endif %}
-<!--        {% endfor %}-->
-
-    </div>
-    {% else %}
-    <h2>Категория не присвоена!</h2>
+<div >
     {% endif %}
-
+</div>
     <h1>{{ new.preview_name|censor }}</h1>
     <h1>{{ new.dateCreation|date:'d M Y, H:m'  }}</h1>
     <p>{{ new.text|censor }}</p>
@@ -70,25 +53,4 @@
     </form>
 </div>
 
-<!--<div>-->
-<!--    {% if CP %}-->
-<!--    <h1> Комментарии </h1>-->
-<!--    <p> {{CP}} </p>-->
-<!--    {% else %}-->
-<!--    <br>-->
-<!--    <h2>НЕТУ!</h2>-->
-<!--    {% endif %}-->
-<!--</div>-->
-<!--<div>-->
-<!--    {% if new_comment %}-->
-<!--    <h2>Ваш комментарий был добавлен.</h2>-->
-<!--    {% else %}-->
-<!--    <h2> Добавить новый комментарий </h2>-->
-<!--    <form action="." method="post">-->
-<!--    {{ comment_form.as_p }}-->
-<!--    {% csrf_token %}-->
-<!--        <p><input type="submit" value="Добавить комментарий"></p>-->
-<!--    </form>-->
-<!--{% endif %}-->
-<!--</div>-->
 {% endblock content %}

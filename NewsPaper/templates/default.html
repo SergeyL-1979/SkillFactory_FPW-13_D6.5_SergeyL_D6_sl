@@ -46,22 +46,22 @@
                         <a class="nav-link" href="/news/add/"> Добавить </a>
                     </li>
                     <!-- ===============================================================-->
-<!--                    <div class="dropdown collapse navbar-collapse" id="navbarNavDarkDropdown">-->
-<!--                      <ul class="navbar-nav">-->
-<!--                        <li class="nav-item dropdown">-->
-<!--                          <a class="nav-link dropdown-toggle btn"-->
-<!--                            href="/"  role="button"-->
-<!--                            data-toggle="dropdown" aria-expanded="false">-->
-<!--                             Категория-->
-<!--                          </a>-->
-<!--                          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">-->
-<!--                              {% for category in all_category %}-->
-<!--                            <a class="dropdown-item" href=""> {{ category }} </a>-->
-<!--                              {% endfor %}-->
-<!--                          </ul>-->
-<!--                        </li>-->
-<!--                      </ul>-->
-<!--                    </div>-->
+                    <div class="dropdown collapse navbar-collapse" id="navbarNavDarkDropdown">
+                      <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle btn"
+                            href="/"  role="button"
+                            data-toggle="dropdown" aria-expanded="false">
+                             Категория
+                          </a>
+                          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                              {% for category in all_category %}
+                            <a class="dropdown-item" href="{% url 'category' category.pk %}"> {{ category }} </a>
+                              {% endfor %}
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
                     <!-- ================================================================-->
                     <li class="nav-item">
                         {% if user.is_authenticated %}

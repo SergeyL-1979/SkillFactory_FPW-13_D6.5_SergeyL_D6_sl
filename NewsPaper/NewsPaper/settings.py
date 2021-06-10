@@ -103,8 +103,8 @@ LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'skillfactory'
-EMAIL_HOST_PASSWORD = 'PWSD'
+EMAIL_HOST_USER = 'skillfactory72'
+EMAIL_HOST_PASSWORD = 'Wia'
 EMAIL_USE_TLS = True
 
 # DEFAULT_FROM_EMAIL = 'ssss@yahoo.com'  # EMAIL_HOST_USER

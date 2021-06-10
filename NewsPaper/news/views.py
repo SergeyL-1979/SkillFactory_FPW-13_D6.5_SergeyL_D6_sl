@@ -140,96 +140,32 @@ class NewsDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
 
 
 # =============== По категориям детали =====================================
-# class NewsCategoryListView(ListView):
-#     model = Category
-#     template_name = 'news_category.html'
-#     context_object_name = 'categorys'
-
-    # def get_success_url(self):
-    #     return reverse('news_category', kwargs={'pk': self.get_object().id})
-    #
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super(NewsCategoryListView, self).get_context_data(**kwargs)
-    #     context['all_category'] = Category.objects.filter()
-    #     context['all_pc_dt'] = Post.objects.filter()
-    #     return context
-
-
-class CategorySubscribe(LoginRequiredMixin, View):
+class NewsCategoryListView(DetailView):
     model = Category
     template_name = 'news_category.html'
-    context_object_name = 'new'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.get(pk=self.kwargs.get('pk'))
+        posts = []
+        for i in list(Post.objects.filter(postCategory__category_name=category).order_by('-id')):
+            posts.append(i)
+        context['posts_in_category'] = posts
+        context['all_category'] = Category.objects.all()
+        context['is_subscriber'] = Category.objects.get(
+            pk=self.kwargs.get('pk')).subscriber.filter(username=self.request.user).exists()
+        return context
+
+
+class Subscriber(UpdateView):
+    model = Category
 
     def post(self, request, *args, **kwargs):
-        user = self.request.user
-        category = get_object_or_404(Category, id=self.kwargs['pk'])
-        if category.subscriber.filter(self.request.user).exists():
-            category.subscriber.remove(user)
+        if not Category.objects.get(pk=self.kwargs.get('pk')).subscriber.filter(username=self.request.user).exists():
+            Category.objects.get(pk=self.kwargs.get('pk')).subscriber.add(self.request.user)
         else:
-            category.subscriber.add(user)
-
-        send_mail(
-            subject=f'{user}',
-            # имя клиента и дата записи будут в теме для удобства
-            message=f'Категория на которую вы подписаны {category.category_name}  ',
-            # сообщение с кратким описанием проблемы
-            from_email='test43@gmail.com',  # здесь указываете почту, с которой будете отправлять (об этом попозже)
-            recipient_list=['skillfac@gmail.com']  # здесь список получателей. Например, секретарь, сам врач и т. д.
-        )
-        return redirect('/')
-
-
-@login_required
-def subscribe_me(request, pk):
-    user = request.user
-    category = Category.objects.get(id=pk)
-    if category not in user.category_set.all():
-        category.subscriber.add(user)
-        return redirect(request.META.get('HTTP_REFERER'))
-    else:
+            Category.objects.get(pk=self.kwargs.get('pk')).subscriber.remove(self.request.user)
         return redirect(request.META.get('HTTP_REFERER'))
 
 
-@login_required
-def unsubscribe_me(request, pk):
-    user = request.user
-    category = Category.objects.get(id=pk)
-    if category in user.category_set.all():
-        category.subscriber.remove(user)
-        return redirect(request.META.get('HTTP_REFERER'))
-    else:
-        return redirect(request.META.get('HTTP_REFERER'))
-# @login_required
-# def subscribe_view(request):
-#     """Вьюшка для функционала кнопок Подписаться/Отписаться + Отправка подтверждения Отписки/Подписки юзеру"""
-#     category = get_object_or_404(Category, id=request.POST.get('pk'))
-#     if category.subscriber.filter(id=request.user.id).exists():
-#         category.subscriber.remove(request.user)
-#         sub_trigger = False
-#     else:
-#         category.subscriber.add(request.user)
-#         sub_trigger = True
-#     html_context_category = {'category_name': category, 'sub_category_user': request.user}
-#     if sub_trigger:
-#         html_content = render_to_string('mail_notification_subscribe.html', html_context_category)
-#         msg = EmailMultiAlternatives(
-#             subject=f'Подтверждение подписки на обновления в категории {html_context_category["sub_category_name"]} '
-#                     f'(velosiped.test)',
-#             from_email='testun_test@mail.ru',
-#             to=['skillfac@gmail.com'],
-#         )
-#         msg.attach_alternative(html_content, "text/html")  # добавляем html
-#
-#         msg.send()  # отсылаем
-#     else:
-#         html_content = render_to_string('mail_notification_unsubscribe.html', html_context_category)
-#         msg = EmailMultiAlternatives(
-#             subject=f'Подтверждение отписки от обновлений в категории {html_context_category["sub_category_name"]}'
-#                     f'(velosiped.test)',
-#             from_email='testun_test@mail.ru',
-#             to=['skillfac@gmail.com'],  # это то же, что и recipients_list
-#         )
-#         msg.attach_alternative(html_content, "text/html")  # добавляем html
-#
-#         msg.send()  # отсылаем
-#     return redirect('news/')
+

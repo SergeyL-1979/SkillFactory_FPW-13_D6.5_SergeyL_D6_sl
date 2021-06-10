@@ -15,8 +15,8 @@ def sub_send(sender, instance, created, **kwargs):
     send_mail(
         subject=subject,
         message=instance.text,
-        from_email='skillfactory@gmail.com',
-        recipient_list=['testovuj@gmail.com'],
+        from_email='skill@gmail.com',
+        recipient_list=['skillfactory@gmail.com'],
         html_message='',
     )
 
@@ -28,8 +28,8 @@ def sub_del(sender, instance, **kwargs):
     send_mail(
         subject=subject,
         message=f'Удалено {instance.dateCreation.strftime("%d %m %Y")}',
-        from_email='skillfactory@gmail.com',
-        recipient_list=['testovuj@gmail.com']
+        from_email='skill@gmail.com',
+        recipient_list=['skillfactory@gmail.com']
     )
 
 
